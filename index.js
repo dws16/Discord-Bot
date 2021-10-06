@@ -5,7 +5,7 @@ if (process.env.NODE_ENV !== 'production') {
   require('dotenv').config();
 }
 
-const prefixes = ['~', '!', '!!~'];
+const prefixes = ['~', '!', '!!~', '/'];
 const ownerID = 'myID';
 
 client.on('ready', () => {
@@ -20,8 +20,10 @@ client.on('message', message => {
     if (message.content.startsWith(prefix)) selectedPrefix = prefix;
   });
 
-  if (!selectedPrefix) return;
+  let level = require(`./commands/level.js`);
+  level.run(client, message);
 
+  if (!selectedPrefix) return;
   let args = message.content.slice(selectedPrefix.length).trim().split(' ');
   let cmd = args.shift().toLowerCase();
 
@@ -34,7 +36,6 @@ client.on('message', message => {
   } catch (e) {
     console.log(e.stack);
   }
-
 });
 
 client.login(process.env.API_TOKEN);

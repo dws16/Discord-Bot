@@ -3,3 +3,4 @@ solution.json
 /node_modules/
 .env
 /.vscode/
+data/*/
