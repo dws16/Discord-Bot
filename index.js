@@ -1,22 +1,24 @@
-const Discord = require('discord.js');
-const client = new Discord.Client();
+const {
+  Client,
+  Intents
+} = require('discord.js');
 
-if (process.env.NODE_ENV !== 'production') {
-  require('dotenv').config();
-}
+const client = new Client({
+  intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES]
+});
 
-const prefixes = ['~', '!', '!!~', '/'];
-const ownerID = 'myID';
+const config = require("./data/config.json");
+
 
 client.on('ready', () => {
   console.log('I\'m Ready!')
 });
 
-client.on('message', message => {
+client.on('messageCreate', message => {
   if (message.author.bot) return;
 
   selectedPrefix = '';
-  prefixes.forEach((prefix) => {
+  config.prefix.forEach((prefix) => {
     if (message.content.startsWith(prefix)) selectedPrefix = prefix;
   });
 
@@ -38,4 +40,4 @@ client.on('message', message => {
   }
 });
 
-client.login(process.env.API_TOKEN);
+client.login(config.API_TOKEN);

@@ -1,6 +1,6 @@
 test.js
 solution.json
 /node_modules/
-.env
 /.vscode/
 data/*/
+data/config.json
