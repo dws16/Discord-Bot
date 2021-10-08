@@ -1,12 +1,11 @@
 exports.run = (client, message, args) => {
-  if (message.content.length < 2) return;
+  // if (message.content.length < 2) return;
 
   function sendMsg(level) {
     message.channel.send(`<@${message.author.id}> telah naik ke level ${level}`);
   }
 
   const fs = require('fs');
-  const levelDb = JSON.parse(fs.readFileSync('./data/level.json'));
   const user_id = message.author.id;
   var dir = `./data/${message.guild.id}`;
 
@@ -37,7 +36,7 @@ exports.run = (client, message, args) => {
     if (data.user_id == user_id) user = index;
   });
   multiplier = JSON.parse(fs.readFileSync(`${dir}/multiplier.json`)).multiplier;
-  exp = 1 * multiplier;
+  exp = message.content.length * multiplier;
   if (user !== false) {
     let before = user_level[user].level;
     while (exp > 0) {
@@ -72,7 +71,7 @@ exports.run = (client, message, args) => {
 // let fs = require('fs');
 // let levels = [];
 // for (let i = 0; i < 100; i++) {
-//   let exp = Math.pow(i, 2);
+//   let exp = 30 * Math.pow(i, 2);
 
 //   levels.push(exp);
 // }

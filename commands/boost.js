@@ -9,7 +9,7 @@ exports.run = (client, message, args) => {
         fs.writeFileSync(`./data/${message.guild.id}/multiplier.json`, `{"multiplier":${multiplier}}`, function (err) {
           console.log(err);
         })
-        message.reply(`Boost EXP ${multiplier}x berhasil diaktifkan!`);
+        message.reply(`Boost EXP x${multiplier} berhasil diaktifkan!`);
       } else {
         message.reply('Harap masukkan angka antara 1 - 100');
       }
