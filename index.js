@@ -9,8 +9,6 @@ app.listen(3000, () => {
   console.log("Bot is ready!")
 })
 
-
-
 const {
   Client,
   Intents
@@ -42,10 +40,6 @@ client.on('messageCreate', message => {
   let args = message.content.slice(selectedPrefix.length).trim().split(' ');
   let cmd = args.shift().toLowerCase();
 
-  config.commands.forEach((command) => {
-    if (command == cmd && message.guild.ownerId != message.author.id) message.reply('Kamu bukan Raja!');
-  });
-
   try {
 
     delete require.cache[require.resolve(`./commands/${cmd}.js`)];
@@ -57,4 +51,5 @@ client.on('messageCreate', message => {
   }
 });
 
-client.login(config.API_TOKEN);
+const mySecret = process.env['API_TOKEN']
+client.login(mySecret);

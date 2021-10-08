@@ -5,6 +5,8 @@ exports.run = (client, message, args) => {
     message.channel.send(`<@${message.author.id}> telah naik ke level ${level}`);
   }
 
+  if (message.guild.ownerId != message.author.id) message.reply('Kamu bukan Raja!') return;
+
   const fs = require('fs');
   const user_id = message.author.id;
   var dir = `./data/${message.guild.id}`;
