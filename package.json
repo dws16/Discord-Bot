@@ -1,5 +1,28 @@
 {
   "dependencies": {
-    "discord.js": "^13.2.0"
-  }
+    "discord.js": "^13.2.0",
+    "express": "^4.17.1"
+  },
+  "name": "Discord-Bot",
+  "version": "1.0.0",
+  "main": "index.js",
+  "devDependencies": {
+    "node": "^16.10.0"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dws16/Discord-Bot.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/dws16/Discord-Bot/issues"
+  },
+  "homepage": "https://github.com/dws16/Discord-Bot#readme",
+  "description": ""
 }
