@@ -42,6 +42,10 @@ client.on('messageCreate', message => {
   let args = message.content.slice(selectedPrefix.length).trim().split(' ');
   let cmd = args.shift().toLowerCase();
 
+  config.commands.forEach((command) => {
+    if (command == cmd && message.guild.ownerId != message.author.id) message.reply('Kamu bukan Raja!');
+  });
+
   try {
 
     delete require.cache[require.resolve(`./commands/${cmd}.js`)];
