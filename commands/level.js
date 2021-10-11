@@ -61,7 +61,7 @@ exports.run = (client, message, args) => {
     })
     sendMsg(1);
   }
-  
+
   fs.writeFileSync(`${dir}/user_level.json`, JSON.stringify(user_level), function (err) {
     console.log(err);
   })

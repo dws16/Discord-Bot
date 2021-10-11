@@ -1,9 +1,9 @@
 exports.run = (client, message, args) => {
   const fs = require('fs');
 
-if (message.guild.ownerId != message.author.id) {
-  message.reply('Kamu bukan Raja!'); 
-  return
+  if (message.guild.ownerId != message.author.id) {
+    message.reply('Kamu bukan Raja!');
+    return
   }
   if (args[0]) {
     multiplier = parseInt(args[0])
