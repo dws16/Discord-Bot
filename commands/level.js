@@ -1,11 +1,8 @@
 exports.run = (client, message, args) => {
-  // if (message.content.length < 2) return;
 
   function sendMsg(level) {
     message.channel.send(`<@${message.author.id}> telah naik ke level ${level}`);
   }
-
-  if (message.guild.ownerId != message.author.id) message.reply('Kamu bukan Raja!') return;
 
   const fs = require('fs');
   const user_id = message.author.id;
@@ -64,6 +61,7 @@ exports.run = (client, message, args) => {
     })
     sendMsg(1);
   }
+  
   fs.writeFileSync(`${dir}/user_level.json`, JSON.stringify(user_level), function (err) {
     console.log(err);
   })

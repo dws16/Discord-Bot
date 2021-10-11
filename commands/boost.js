@@ -1,7 +1,10 @@
 exports.run = (client, message, args) => {
   const fs = require('fs');
 
-if (message.guild.ownerId != message.author.id) message.reply('Kamu bukan Raja!') return;
+if (message.guild.ownerId != message.author.id) {
+  message.reply('Kamu bukan Raja!'); 
+  return
+  }
   if (args[0]) {
     multiplier = parseInt(args[0])
     if (Number.isInteger(multiplier)) {
@@ -9,7 +12,7 @@ if (message.guild.ownerId != message.author.id) message.reply('Kamu bukan Raja!'
         fs.writeFileSync(`./data/${message.guild.id}/multiplier.json`, `{"multiplier":${multiplier}}`, function (err) {
           console.log(err);
         })
-        message.reply(`Boost EXP x${multiplier} ${message.guild.ownerId} ${message.author.id} berhasil diaktifkan!`);
+        message.reply(`Boost EXP x${multiplier} berhasil diaktifkan!`);
       } else {
         message.reply('Harap masukkan angka antara 1 - 100');
       }
