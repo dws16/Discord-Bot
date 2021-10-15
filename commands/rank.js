@@ -17,7 +17,7 @@ exports.run = (client, message, args) => {
 
   list.forEach((data, id) => {
 
-    msgName += `${(id == 0 ? "👑" : id+1+'.')} <@${data.user_id}>           \n`;
+    msgName += `${(id == 0 ? "👑" : id+1+'.')} <@${data.user_id}>\n`;
     msgLevel += `${data.level}\n`;
     msgExp += `${data.exp}/${level[data.level] ? level[data.level] : '∞'}\n`
   })
