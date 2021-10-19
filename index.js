@@ -33,6 +33,7 @@ client.on('messageCreate', message => {
     if (message.content.startsWith(prefix)) selectedPrefix = prefix;
   });
 
+  delete require.cache[require.resolve(`./commands/level.js`)];
   let level = require(`./commands/level.js`);
   level.run(client, message);
 

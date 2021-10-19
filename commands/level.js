@@ -4,67 +4,54 @@ exports.run = (client, message, args) => {
     message.channel.send(`<@${message.author.id}> telah naik ke level ${level}`);
   }
 
-  const fs = require('fs');
-  const user_id = message.author.id;
-  var dir = `./data/${message.guild.id}`;
+  async function level(){
+    const fs = require('fs');
+    const Database = require("@replit/database");
+    const db = new Database();
+    const user_id = message.author.id;
+    const guild_id = message.guild.id;
+    var dir = `./data/${message.guild.id}`;
 
-  if (!fs.existsSync(dir)) {
-    fs.mkdirSync(dir);
-  }
-
-  fs.readFile(`${dir}/multiplier.json`, function (err, fd) {
-    if (err) {
-      fs.writeFileSync(`${dir}/multiplier.json`, '{"multiplier":1}', function (err) {
-        console.log(err);
-      })
+    if (!fs.existsSync(dir)) {
+      fs.mkdirSync(dir);
     }
-  })
-  fs.readFile(`${dir}/user_level.json`, function (err, fd) {
-    if (err) {
-      fs.writeFileSync(`${dir}/user_level.json`, '[]', function (err) {
-        console.log(err);
-      })
-    }
-  })
 
-
-  let user_level = JSON.parse(fs.readFileSync(`${dir}/user_level.json`));
-  const level = JSON.parse(fs.readFileSync(`./data/level.json`));
-  let user = false;
-  user_level.forEach((data, index) => {
-    if (data.user_id == user_id) user = index;
-  });
-  multiplier = JSON.parse(fs.readFileSync(`${dir}/multiplier.json`)).multiplier;
-  exp = message.content.length * multiplier;
-  if (user !== false) {
-    let before = user_level[user].level;
-    while (exp > 0) {
-      user_level[user].exp = user_level[user].exp + exp;
-      exp = user_level[user].exp < level[user_level[user].level] ? 0 : user_level[user].exp - level[user_level[user].level];
-      console.log(exp, user_level[user], level[user_level[user].level]);
-
-      if (user_level[user].exp >= level[user_level[user].level]) {
-        user_level[user].level++;
-        user_level[user].exp = 0;
+    fs.readFile(`${dir}/multiplier.json`, function (err, fd) {
+      if (err) {
+        fs.writeFileSync(`${dir}/multiplier.json`, '{"multiplier":1}', function (err) {
+          console.log(err);
+        })
       }
-    }
-    let after = user_level[user].level;
-    if (before != after) {
-      sendMsg(user_level[user].level);
-    }
-
-  } else {
-    user_level.push({
-      user_id: user_id,
-      exp: 1,
-      level: 1
     })
-    sendMsg(1);
+
+    const level = JSON.parse(fs.readFileSync(`./data/level.json`));
+    const user = JSON.parse(await db.get(`user_level_${guild_id}_${user_id}`));
+    multiplier = JSON.parse(fs.readFileSync(`${dir}/multiplier.json`)).multiplier;
+    exp = message.content.length * multiplier;
+    if (user) {
+      let before = user.level;
+      while (exp > 0) {
+       user.exp = user.exp + exp;
+        exp = user.exp < level[user.level] ? 0 : user.exp - level[user.level];
+        console.log(exp, user, level[user.level]);
+
+        if (user.exp >= level[user.level]) {
+          user.level++;
+          user.exp = 0;
+        }
+      }
+      let after = user.level;
+      if (before != after) {
+        sendMsg(user.level);
+      }
+      db.set(`user_level_${guild_id}_${user_id}`, `${JSON.stringify(user)}`);
+    } else {
+      db.set(`user_level_${guild_id}_${user_id}`, `{"level" : 1, "exp" : 1}`);
+      sendMsg(1);
+    }
   }
 
-  fs.writeFileSync(`${dir}/user_level.json`, JSON.stringify(user_level), function (err) {
-    console.log(err);
-  })
+  level()
 }
 
 
