@@ -2,6 +2,24 @@ exports.run = (client, message, args) => {
 
   function sendMsg(level) {
     message.channel.send(`<@${message.author.id}> telah naik ke level ${level}`);
+
+    let budak = message.guild.roles.cache.find(role => role.name ==='Budak');
+    let petani = message.guild.roles.cache.find(role => role.name ==='Petani');
+    let pedagang = message.guild.roles.cache.find(role => role.name ==='Pedagang');
+    let bangsawan = message.guild.roles.cache.find(role => role.name ==='Bangsawan');
+    let member = message.guild.members.cache.get(message.author.id);
+
+      if(level>20 && level<=45){
+        member.roles.add(petani)
+        member.roles.remove(budak)
+        console.log('tes');
+      }else if(level>45 && level<=70){
+        member.roles.add(pedagang)
+        member.roles.remove(petani)
+      }else if(level>70 && level<101){
+        member.roles.add(bangsawan)
+        member.roles.remove(pedagang)
+    }
   }
 
   async function level(){

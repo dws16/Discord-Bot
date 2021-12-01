@@ -18,7 +18,7 @@ exports.run = (client, message, args) => {
     let exp = 0;
     list.forEach((data, id) => {
       exp = 0
-      exp = (level[data.level] ? level[data.level] : level[data.level-2]) + data.exp;
+      exp = (level[data.level] ? level.slice(0, data.level).reduce((a, b) => a + b, 0) : level[data.level-2]) + data.exp;
       list[id].totalExp = exp;
     });
     list = list.sort((a,b) => parseInt(b.totalExp) - parseInt(a.totalExp));
