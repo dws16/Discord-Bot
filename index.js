@@ -28,6 +28,10 @@ client.on('ready', () => {
 client.on('messageCreate', message => {
   if (message.author.bot) return;
 
+  delete require.cache[require.resolve(`./commands/ban_words.js`)];
+  let ban_words = require(`./commands/ban_words.js`);
+  ban_words.run(client, message);
+
   selectedPrefix = '';
   config.prefix.forEach((prefix) => {
     if (message.content.startsWith(prefix)) selectedPrefix = prefix;
